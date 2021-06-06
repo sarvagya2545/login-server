@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const { protectRoutes } = require('./middleware/auth');
  
 mongoose.connect('mongodb://localhost:27017/auth', { 
     useNewUrlParser: true, 
@@ -12,9 +14,10 @@ mongoose.connect('mongodb://localhost:27017/auth', {
 .catch(err => console.log(err));
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.get('/health', (_,res) => res.send('Server up and running'))
-app.use('/api/auth', require('./api/routes/auth'));
+app.use('/auth', require('./api/routes/auth'));
 
 app.use('*', (req,res) => res.sendStatus(404));
 

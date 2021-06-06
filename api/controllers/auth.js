@@ -45,5 +45,29 @@ module.exports = {
             console.log(error);
             res.status(500).json({ error });
         }
+    },
+    logout: async (req,res) => {
+        try {
+            cookie = req.cookies;
+            for (var prop in cookie) {
+                if (!cookie.hasOwnProperty(prop)) {
+                    continue;
+                }    
+                res.cookie(prop, '', {expires: new Date(0)});
+            }
+
+            res.send('Signed out!');
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error });           
+        }
+    },
+    getUserInfo: async (req,res) => {
+        try {
+            res.send(req.user);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error });  
+        }
     }
 }
