@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const { protectRoutes } = require('./middleware/auth');
+const cors = require('cors');
  
 mongoose.connect('mongodb://localhost:27017/auth', { 
     useNewUrlParser: true, 
@@ -15,6 +15,7 @@ mongoose.connect('mongodb://localhost:27017/auth', {
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({ origin: 'http://localhost:4200', credentials: true }))
 
 app.get('/health', (_,res) => res.send('Server up and running'))
 app.use('/auth', require('./api/routes/auth'));
