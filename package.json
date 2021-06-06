@@ -1,0 +1,17 @@
+{
+  "name": "login-server",
+  "version": "1.0.0",
+  "description": "Server for basic authentication",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "Sarvagya Sharma",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.6.9",
+    "mongoose": "^5.12.13"
+  }
+}
