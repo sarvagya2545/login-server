@@ -1,11 +1,15 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
  
-mongoose.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(conn => console.log('MongoDB connected'))
-    .catch(err => console.log(err))
-;
+mongoose.connect('mongodb://localhost:27017/auth', { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true, 
+    useCreateIndex: true 
+})
+.then(conn => console.log('MongoDB connected'))
+.catch(err => console.log(err));
 
 app.use(express.json());
 
