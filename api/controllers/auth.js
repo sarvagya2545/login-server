@@ -1,6 +1,10 @@
 const User = require("../../models/User");
 const jwt = require('jwt-simple');
 
+const cookieOptions = {
+    expire: 100 + Date.now()
+}
+
 module.exports = {
     signup: async (req,res) => {
         try {
@@ -18,7 +22,7 @@ module.exports = {
                 id: user._id
             }, process.env.SECRET);
 
-            res.status(201).cookie('Auth-token', token).json({ user, token });
+            res.status(201).cookie('Auth-token', token, cookieOptions).json({ user, token });
 
         } catch (error) {
             console.log(error);
@@ -39,7 +43,7 @@ module.exports = {
                 id: foundUser._id
             }, process.env.SECRET);
 
-            res.status(200).cookie('Auth-token', token).json({ user: foundUser, token });
+            res.status(200).cookie('Auth-token', token, cookieOptions).json({ user: foundUser, token });
 
         } catch (error) {
             console.log(error);
@@ -48,15 +52,9 @@ module.exports = {
     },
     logout: async (req,res) => {
         try {
-            cookie = req.cookies;
-            for (var prop in cookie) {
-                if (!cookie.hasOwnProperty(prop)) {
-                    continue;
-                }    
-                res.cookie(prop, '', {expires: new Date(0)});
-            }
-
-            res.send('Signed out!');
+            res.clearCookie('Auth-token')
+            console.log('USER LOGOUT');
+            res.status(200).json({ message: 'Signed out!' });
         } catch (error) {
             console.log(error);
             res.status(500).json({ error });           
